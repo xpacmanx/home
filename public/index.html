@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Тестовая страница</title>
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0" />
+        <meta charset="utf-8" />
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,700&amp;amp;subset=cyrillic" rel="stylesheet" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="style.css" rel="stylesheet" />
+    </head>
+    <body>
+
+        <header class="header off">
+            <button class="toggle__button turn-off" style="top:16px;">ВЫКЛ</button>
+            Sweet<span>Home</span>
+        </header>
+        <main>
+            <div class="toggle on">
+                <span class="toggle__icon fa fa-lightbulb-o"></span>
+                <h2 class="toggle__header">Спальня</h2>
+                <p class="toggle__description">Свет</p>
+                <button class="toggle__button turn-on">ВКЛ</button>
+            </div>
+        </main>
+        
+        
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="jquery.js"></script>
+        <script>
+            var socket = io.connect();
+            var n = 0;
+            
+            socket.on('now',function(n){
+                if (n == 0) { 
+                    $('.turn').addClass('active').text('Вкл');
+                } else {
+                    $('.turn').removeClass('active').text('Выкл');
+                }
+            });
+            
+            $('.turn-on').click(function(){
+                    socket.emit('setLight',1);
+            });
+            $('.turn-off').click(function(){
+                    socket.emit('setLight',0);
+            });
+        </script>
+    </body>
+</html>
