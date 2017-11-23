@@ -12,15 +12,17 @@ server.listen(8000, function () {
     console.log('listening on *:8000');
 });
 
-var now = 0;
-
 io.on('connection', function (client) {
     console.log('Client connected...');
 
-    client.emit('now', now);
+    client.emit('check');
 
     client.on('setLight',function(value){
         io.emit('light',value);
+    })
+
+    client.on('status',function(value){
+        io.emit('change',value);
     })
 
 });

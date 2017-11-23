@@ -10,8 +10,7 @@
     </head>
     <body>
 
-        <header class="header off">
-            <button class="toggle__button turn-off" style="top:16px;">ВЫКЛ</button>
+        <header class="header">
             Sweet<span>Home</span>
         </header>
         <main>
@@ -28,20 +27,21 @@
         <script src="jquery.js"></script>
         <script>
             var socket = io.connect();
-            var n = 0;
             
-            socket.on('now',function(n){
+            socket.on('change',function(n){
                 if (n == 0) { 
-                    $('.turn').addClass('active').text('Вкл');
+                    $('.toggle').removeClass('off').addClass('on');
+                    $('.toggle__button').removeClass('turn-off').addClass('turn-on').text('Вкл');
                 } else {
-                    $('.turn').removeClass('active').text('Выкл');
+                    $('.toggle').removeClass('on').addClass('off');
+                    $('.toggle__button').removeClass('turn-on').addClass('turn-off').text('Выкл');
                 }
             });
             
-            $('.turn-on').click(function(){
+            $(document).on('click','.turn-on',function(){
                     socket.emit('setLight',1);
             });
-            $('.turn-off').click(function(){
+            $(document).on('click','.turn-off',function(){
                     socket.emit('setLight',0);
             });
         </script>
