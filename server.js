@@ -15,7 +15,7 @@ server.listen(8000, function () {
 io.on('connection', function (client) {
     console.log('Client connected...');
 
-    client.emit('check');
+    io.emit('check');
 
     client.on('setLight',function(value){
         io.emit('light',value);
